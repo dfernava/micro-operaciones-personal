@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyecto.everis.model.ClientAccount;
+import com.proyecto.everis.dto.ClientAccountDTO;
+import com.proyecto.everis.model.Account;
 import com.proyecto.everis.service.IClientAccountService;
 
 import reactor.core.publisher.Flux;
@@ -26,28 +27,33 @@ public class ClientAccountController {
 	private IClientAccountService service;
 	
 	@PostMapping
-	Mono<ClientAccount> create(@Valid @RequestBody ClientAccount client){
+	Mono<ClientAccountDTO> create(@Valid @RequestBody ClientAccountDTO client){
 		return service.create(client);
 	}
 	
 	@GetMapping(produces = "application/json")
-	Flux<ClientAccount> listAll(){
+	Flux<ClientAccountDTO> listAll(){
 		return service.listAll();
 	}
 	
 	@GetMapping(produces = "application/json",value="/{id}")
-	Mono<ClientAccount> listById(@PathVariable String id){
+	Mono<ClientAccountDTO> listById(@PathVariable String id){
 		return service.finId(id);
 	}
 	
 	@PutMapping
-	Mono<ClientAccount> update(@Valid @RequestBody ClientAccount client){
+	Mono<ClientAccountDTO> update(@Valid @RequestBody ClientAccountDTO client){
 		return service.update(client);
 	}
 	
 	@DeleteMapping(value="/{id}")
 	Mono<Void> deleteById(@PathVariable String id) {
 		return service.delete(id);
+	}
+	
+	@GetMapping(produces = "application/json",value="/account/{id}")
+	Flux<Account> listAccount(@PathVariable String id){
+		return service.findByClientId(id);
 	}
 
 }

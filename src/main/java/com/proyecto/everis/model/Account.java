@@ -16,6 +16,8 @@ public class Account{
 	
 	private String id;
 	
+	private Client client;
+	
 	private String descripcion;
 	
 	private long monto;

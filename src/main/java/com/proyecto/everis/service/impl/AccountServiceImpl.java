@@ -3,28 +3,27 @@ package com.proyecto.everis.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.proyecto.everis.dto.ClientAccountDTO;
 import com.proyecto.everis.model.Account;
-import com.proyecto.everis.repository.IClientAccountRepository;
-import com.proyecto.everis.service.IClientAccountService;
+import com.proyecto.everis.repository.IAccountRepository;
+import com.proyecto.everis.service.IAccountService;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-public class ClientAccountServiceImpl implements IClientAccountService {
-	
-	@Autowired
-	private IClientAccountRepository repository;
+public class AccountServiceImpl implements IAccountService {
 
+	@Autowired
+	private IAccountRepository repository;
+	
 	@Override
-	public Mono<ClientAccountDTO> create(ClientAccountDTO t) {
+	public Mono<Account> create(Account t) {
 		// TODO Auto-generated method stub
 		return repository.save(t);
 	}
 
 	@Override
-	public Mono<ClientAccountDTO> update(ClientAccountDTO t) {
+	public Mono<Account> update(Account t) {
 		// TODO Auto-generated method stub
 		return repository.save(t);
 	}
@@ -36,13 +35,13 @@ public class ClientAccountServiceImpl implements IClientAccountService {
 	}
 
 	@Override
-	public Mono<ClientAccountDTO> finId(String id) {
+	public Mono<Account> finId(String id) {
 		// TODO Auto-generated method stub
 		return repository.findById(id);
 	}
 
 	@Override
-	public Flux<ClientAccountDTO> listAll() {
+	public Flux<Account> listAll() {
 		// TODO Auto-generated method stub
 		return repository.findAll();
 	}
@@ -51,12 +50,6 @@ public class ClientAccountServiceImpl implements IClientAccountService {
 	public Mono<Void> deleteAll() {
 		// TODO Auto-generated method stub
 		return repository.deleteAll();
-	}
-
-	@Override
-	public Flux<Account> findByClientId(String id) {
-		// TODO Auto-generated method stub
-		return repository.findByClientId(id);
 	}
 
 }
