@@ -2,28 +2,27 @@ package com.proyecto.everis.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.proyecto.everis.model.ClientCredit;
-import com.proyecto.everis.repository.IClientCreditRepository;
-import com.proyecto.everis.service.IClientCreditService;
+import com.proyecto.everis.model.Credit;
+import com.proyecto.everis.repository.ICreditRepository;
+import com.proyecto.everis.service.ICreditService;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-public class ClientCreditServiceImpl implements IClientCreditService {
+public class CreditServiceImpl implements ICreditService {
 
 	@Autowired
-	private IClientCreditRepository repository;
+	private ICreditRepository repository;
 	
 	@Override
-	public Mono<ClientCredit> create(ClientCredit t) {
+	public Mono<Credit> create(Credit t) {
 		// TODO Auto-generated method stub
 		return repository.save(t);
 	}
 
 	@Override
-	public Mono<ClientCredit> update(ClientCredit t) {
+	public Mono<Credit> update(Credit t) {
 		// TODO Auto-generated method stub
 		return repository.save(t);
 	}
@@ -35,13 +34,13 @@ public class ClientCreditServiceImpl implements IClientCreditService {
 	}
 
 	@Override
-	public Mono<ClientCredit> finId(String id) {
+	public Mono<Credit> findId(String id) {
 		// TODO Auto-generated method stub
 		return repository.findById(id);
 	}
 
 	@Override
-	public Flux<ClientCredit> listAll() {
+	public Flux<Credit> listAll() {
 		// TODO Auto-generated method stub
 		return repository.findAll();
 	}
@@ -51,5 +50,18 @@ public class ClientCreditServiceImpl implements IClientCreditService {
 		// TODO Auto-generated method stub
 		return repository.deleteAll();
 	}
+
+	@Override
+	public Flux<Credit> findByClientId(String id) {
+		// TODO Auto-generated method stub
+		return repository.findByClientId(id);
+	}
+
+	@Override
+	public Flux<Credit> findByClientIdAndBankId(String idClient, String ibBank) {
+		// TODO Auto-generated method stub
+		return repository.findByClientIdAndBankId(idClient, ibBank);
+	}
+
 
 }

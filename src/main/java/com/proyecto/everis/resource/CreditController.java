@@ -1,5 +1,6 @@
 package com.proyecto.everis.resource;
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,46 +13,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyecto.everis.model.Account;
-import com.proyecto.everis.service.IAccountService;
-import com.proyecto.everis.util.ValidationAccount;
+import com.proyecto.everis.model.Credit;
+import com.proyecto.everis.service.ICreditService;
+import com.proyecto.everis.util.ValidationCredit;
 
 import io.swagger.annotations.ApiOperation;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/accounts")
-public class AccountController {
+@RequestMapping("/credits")
+public class CreditController {
 	
 	@Autowired
-	private IAccountService service;
+	private ICreditService service;
 	
-	private ValidationAccount validation= new ValidationAccount();;
+	private ValidationCredit validation= new ValidationCredit();
 	
-	
-	//### Inicio CRUD de la clase  cuenta ###
+	//### Inicio CRUD de la clase  crédito ###
 	@ApiOperation(
             value = "Agrega cuenta",
-            notes = "El parámetro de de tipo Account"
+            notes = "El parámetro de de tipo Credit"
     )
 	@PostMapping()
-	Mono<Account> create(@Valid @RequestBody Account account) {
-		if(validation.registerAccount(account)==true) {
-			return service.create(account);
+	Mono<Credit> create(@Valid @RequestBody Credit Credit) {
+		if(validation.registerAccount(Credit.getClientId(), Credit.getProductId(), Credit.getBankId())==true) {
+			return service.create(Credit);
 		}else {
 			return null;
 		}
-		
 	}
 	
 	@ApiOperation(
             value = "Actualizar cuenta",
-            notes = "El parámetro de de tipo Account"
+            notes = "El parámetro de de tipo Credit"
     )
 	@PutMapping()
-	Mono<Account> update(@Valid @RequestBody Account account) {
-		return this.service.update(account);
+	Mono<Credit> update(@Valid @RequestBody Credit Credit) {
+		return this.service.update(Credit);
 	}
 	
 	@ApiOperation(
@@ -59,7 +58,7 @@ public class AccountController {
             notes = "No necesita parámetros"
     )
 	@GetMapping(produces="application/json")
-	Flux<Account> list() {
+	Flux<Credit> list() {
 		return service.listAll();
 	}
 	
@@ -68,7 +67,7 @@ public class AccountController {
             notes = "El parámetro es de tipo string"
     )
 	@GetMapping("/{id}")
-	Mono<Account> findById(@PathVariable String id) {
+	Mono<Credit> findById(@PathVariable String id) {
 		return this.service.findId(id);
 	}
 	

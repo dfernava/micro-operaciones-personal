@@ -12,10 +12,10 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class AccountServiceImpl implements IAccountService {
-
+	
 	@Autowired
 	private IAccountRepository repository;
-	
+
 	@Override
 	public Mono<Account> create(Account t) {
 		// TODO Auto-generated method stub
@@ -35,7 +35,7 @@ public class AccountServiceImpl implements IAccountService {
 	}
 
 	@Override
-	public Mono<Account> finId(String id) {
+	public Mono<Account> findId(String id) {
 		// TODO Auto-generated method stub
 		return repository.findById(id);
 	}
@@ -50,6 +50,18 @@ public class AccountServiceImpl implements IAccountService {
 	public Mono<Void> deleteAll() {
 		// TODO Auto-generated method stub
 		return repository.deleteAll();
+	}
+
+	@Override
+	public Flux<Account> findByClientId(String id) {
+		// TODO Auto-generated method stub
+		return repository.findByClientId(id);
+	}
+
+	@Override
+	public Flux<Account> findByClientIdAndBankId(String idClient, String ibBank) {
+		// TODO Auto-generated method stub
+		return repository.findByClientIdAndBankId(idClient, ibBank);
 	}
 
 }

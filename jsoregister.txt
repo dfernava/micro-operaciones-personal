@@ -1,0 +1,30 @@
+json account
+{
+        "id": "1",
+        "descripcion": "POR EL MOMENTO",
+        "monto": 1000.0,
+        "clientId": "1",
+        "productId": "1",
+        "bankId": "1",
+        "fecha_apertura": "2020-07-27T18:22",
+        "firmantes": [
+            "pepe",
+            "lucho"
+        ],
+        "titulares": [
+            "porsi",
+            "no"
+        ]
+}
+json credit
+{
+    "id": "4",
+    "clientId": "1",
+    "descripcion": "POR EL MOMENTO",
+    "productId": "3",
+    "bankId": "3",
+    "fecha_apertura": "2020-07-27T18:22:00",
+    "total_credito": 1000.0,
+    "consumido": 0.0,
+    "statusCredit": false
+}
