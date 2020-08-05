@@ -3,6 +3,8 @@ package com.proyecto.everis.resource;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,8 @@ import com.proyecto.everis.model.Account;
 import com.proyecto.everis.service.IAccountService;
 import com.proyecto.everis.util.ValidationAccount;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import io.swagger.annotations.ApiOperation;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -35,6 +39,8 @@ public class AccountController {
             value = "Agrega cuenta",
             notes = "El parámetro de de tipo Account"
     )
+	@CircuitBreaker(name="ms3", fallbackMethod = "findError")
+	@TimeLimiter(name="ms3")
 	@PostMapping()
 	Mono<Account> create(@Valid @RequestBody Account account) {
 		if(validation.registerAccount(account)==true) {
@@ -49,6 +55,8 @@ public class AccountController {
             value = "Actualizar cuenta",
             notes = "El parámetro de de tipo Account"
     )
+	@CircuitBreaker(name="ms3", fallbackMethod = "findError")
+	@TimeLimiter(name="ms3")
 	@PutMapping()
 	Mono<Account> update(@Valid @RequestBody Account account) {
 		return this.service.update(account);
@@ -58,6 +66,8 @@ public class AccountController {
             value = "Listar toda cuenta",
             notes = "No necesita parámetros"
     )
+	@CircuitBreaker(name="ms3", fallbackMethod = "findError")
+	@TimeLimiter(name="ms3")
 	@GetMapping(produces="application/json")
 	Flux<Account> list() {
 		return service.listAll();
@@ -67,6 +77,8 @@ public class AccountController {
             value = "Lista una cuentapor id",
             notes = "El parámetro es de tipo string"
     )
+	@CircuitBreaker(name="ms3", fallbackMethod = "findError")
+	@TimeLimiter(name="ms3")
 	@GetMapping("/{id}")
 	Mono<Account> findById(@PathVariable String id) {
 		return this.service.findId(id);
@@ -76,6 +88,8 @@ public class AccountController {
             value = "Eliminda una cuenta por id",
             notes = "El parámetro es de tipo string"
     )
+	@CircuitBreaker(name="ms3", fallbackMethod = "findError")
+	@TimeLimiter(name="ms3")
 	@DeleteMapping("/{id}")
 	Mono<Void> deleteById(@PathVariable String id) {
 		return this.service.delete(id);
@@ -85,6 +99,8 @@ public class AccountController {
             value = "Elimina toda cuenta",
             notes = "Utilizado para pruebas"
     )
+	@CircuitBreaker(name="ms3", fallbackMethod = "findError")
+	@TimeLimiter(name="ms3")
 	@DeleteMapping
 	Mono<Void> deleteAll() {
 		return this.service.deleteAll();
@@ -92,7 +108,9 @@ public class AccountController {
 	
 	//### Fin del crud ###
 	
+	//Método de repsuesta del circuitbraker
+	Mono<ResponseEntity<String>> findError(Exception ex){
+		return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ha ocurrido un error intente en unos minutos"));
+	}
 	
-	
-
 }

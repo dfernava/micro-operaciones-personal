@@ -33,7 +33,7 @@ public class MethodsAccount {
 	}
 	
 	//Lista un cliente por id
-	public Mono<Client> listOneClient(@PathVariable String id) {
+	public Mono<Client> listOneClient(String id) {
 		Mono<Client> client;
 		WebClient webClient=WebClient.create("http://localhost:8080/");
 		if(webClient.get().uri("/clients/"+id).exchange().block().statusCode()!=HttpStatus.NOT_FOUND) {
